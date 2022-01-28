@@ -1,37 +1,13 @@
-<template>
-  <nav class="border-b border-gray-800">
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 py-6">
-      <ul class="flex flex-col md:flex-row items-center">
-        <li class="md:ml-16 mt-3 md:mt-0">Test</li>
-      </ul>
-
-      <div class="flex flex-col md:flex-row items-center"></div>
-    </div>
-  </nav>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
-
-const count = ref(0)
+import { DatabaseIcon } from "@heroicons/vue/solid";
 </script>
 
-<style scoped>
-a {
-  color: #42b983;
-}
-
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
-}
-</style>
+<template>
+  <header class="flex justify-between">
+    <router-link to="/" class="flex items-center text-pink-600">
+      <DatabaseIcon class="w-12 h-12 text-current" />
+      <p class="text-2xl font-extrabold sm:text-3xl sm:tracking-tight lg:text-3xl text-center leading-none text-current">NDMD</p>
+    </router-link>
+    <input type="text" class="border border-pink-600 px-6 py-2 rounded-full bg-gray-100 text-sm" placeholder="Search" />
+  </header>
+</template>
