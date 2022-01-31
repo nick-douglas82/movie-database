@@ -4,10 +4,12 @@ import { SearchIcon, FilmIcon, DesktopComputerIcon } from "@heroicons/vue/outlin
 </script>
 
 <template>
-  <div id="app" class="h-full p-10">
+  <div id="app" class="h-full p-6">
     <div class="flex flex-col flex-1 bg-white h-full p-5">
-      <Header />
-      <router-view />
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <Header />
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
