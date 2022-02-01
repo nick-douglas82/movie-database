@@ -1,38 +1,36 @@
 <template>
-  <div class="home">HOME!</div>
-  <ul>
-    <li v-for="movie in trendingMovies">{{ movie.title }} - {{ movie.media_type }}</li>
-  </ul>
-  ______________
-  <ul>
-    <li v-for="movie in trendingTv">{{ movie.name }} - {{ movie.media_type }}</li>
-  </ul>
+  <MediaListing :media="trendingMovies">
+    <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Today's Trending Movies</h2>
+  </MediaListing>
+  <MediaListing :media="trendingTv">
+    <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Today's Trending TV</h2>
+  </MediaListing>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, computed } from 'vue'
-import useApi from '../composables/useApi'
+import { defineComponent, reactive, toRefs } from 'vue'
+import MediaListing from '@/components/MediaListing.vue'
+import type { Media } from '@/types/media'
 
-interface Trending {
-  value: Array<any>
-}
 export default defineComponent({
+  components: {
+    MediaListing,
+  },
   setup() {
-    let trending = reactive<Trending>({})
-    const { response, error, fetching, fetchData } = useApi(
-      'https://api.themoviedb.org/3/trending/all/day?api_key=e0c577647a14eae09f07aa14fee7caeb'
-    )
-    fetchData()
-    trending = ref(response)
+    const state = reactive({
+      trendingMovies: [] as Media[],
+      trendingTv: [] as Media[],
+    })
 
-    console.log(trending)
-
-    const trendingMovies = computed(() => trending.value.filter(movie => movie.media_type === 'movie'))
-    const trendingTv = computed(() => trending.value.filter(tv => tv.media_type === 'tv'))
+    fetch(`${import.meta.env.VITE_TMDB_URL}trending/all/day?api_key=${import.meta.env.VITE_TMDB_API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        state.trendingMovies = data.results.filter((movie: { media_type: string }) => movie.media_type === 'movie')
+        state.trendingTv = data.results.filter((tv: { media_type: string }) => tv.media_type === 'tv')
+      })
 
     return {
-      trendingMovies,
-      trendingTv,
+      ...toRefs(state),
     }
   },
 })
