@@ -1,21 +1,54 @@
-import { APISettings } from "../http-common";
-
-class DataService {
-  getTrending(): Promise<any> {
-    // return fetch(`${APISettings.baseURL}/trending/all/day?api_key=e0c577647a14eae09f07aa14fee7caeb`, {
-    //   method: "GET",
-    //   headers: APISettings.headers,
-    // }).then(function (response) {
-    //   if (response.status != 200) {
-    //     throw response.status;
-    //   } else {
-    //     return response.json();
-    //   }
-    // });
-    return fetch("https://api.themoviedb.org/3/trending/all/day?api_key=e0c577647a14eae09f07aa14fee7caeb")
-      .then((response) => response.json())
-      .then((data) => data.results);
-  }
+export interface Movie {
+  id: number
+  title: string
+  poster_path: string | null
+  release_date: string
+  vote_average: number
+  overview: string
+  tagline: string
+  genres: Array<{
+    id: number
+    name: string
+  }>
 }
 
-export default new DataService();
+export interface Credits {
+  cast: Array<Person>
+  crew: Array<Crew>
+}
+
+export interface Person {
+  id: number
+  adult: boolean
+  cast_id: number
+  character: string
+  name: string
+  order: 0
+  original_name: string
+  profile_path: string
+}
+
+export interface Crew extends Person {
+  job: string
+}
+
+// export interface Crew {
+//   'Costume Design': Test[]
+//   Director: Test[]
+//   'Original Music Composer': Test[]
+//   Producer: Test[]
+// }
+
+export const fetchMovie = async (id: string): Promise<Movie> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  return await response.json()
+}
+
+export const fetchCredits = async (id: string): Promise<Credits> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  return await response.json()
+}

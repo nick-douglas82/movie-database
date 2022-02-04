@@ -11,7 +11,7 @@ import { DatabaseIcon } from '@heroicons/vue/solid'
       >
         NDMD
       </p>
-      <p class="text-xs mt-auto mb-2 ml-1">Vue</p>
+      <p class="text-xs mt-auto mb-2 ml-1">Vue 3</p>
     </router-link>
     <input type="text" class="border border-pink-600 px-6 py-2 rounded-full bg-gray-100 text-sm" placeholder="Search" />
   </header>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Header from './components/Header.vue'
-import { SearchIcon, FilmIcon, DesktopComputerIcon } from '@heroicons/vue/outline'
 </script>
 
 <template>
@@ -8,7 +7,14 @@ import { SearchIcon, FilmIcon, DesktopComputerIcon } from '@heroicons/vue/outlin
     <div class="flex flex-col flex-1 bg-white h-full p-5 overflow-y-auto">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <Header />
-        <router-view />
+        <Suspense>
+          <template #default>
+            <router-view />
+          </template>
+          <template #fallback>
+            <span>Loading...</span>
+          </template>
+        </Suspense>
       </div>
     </div>
   </div>
