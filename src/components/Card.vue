@@ -10,10 +10,11 @@
         </p>
       </router-link>
       <div class="flex movies-center text-gray-400 text-sm mt-1">
-        <StarIcon class="fill-current text-orange-500 w-4" />
-        <span class="ml-1">{{ value.vote_average }}</span>
-        <span class="mx-2">|</span>
-        <span>{{ formatDate(value.release_date) || formatDate(value.first_air_date) }}</span>
+        <template v-if="value.vote_average > 0">
+          <AverageRating :rating="value.vote_average" />
+          <span class="mx-2">|</span>
+        </template>
+        <span>{{ formatDateToYear(value.release_date) || formatDateToYear(value.first_air_date) }}</span>
       </div>
     </div>
   </div>
@@ -21,12 +22,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { formatDate } from '@/lib/date'
+import { formatDateToYear } from '@/lib/date'
 import type { Media } from '@/types/media'
+import AverageRating from '@/components/AverageRating.vue'
 import { StarIcon } from '@heroicons/vue/solid'
 
 export default defineComponent({
   components: {
+    AverageRating,
     StarIcon,
   },
   props: {
@@ -37,7 +40,7 @@ export default defineComponent({
   },
   setup() {
     return {
-      formatDate,
+      formatDateToYear,
     }
   },
 })

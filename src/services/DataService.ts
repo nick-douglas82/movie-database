@@ -6,6 +6,7 @@ export interface Movie {
   vote_average: number
   overview: string
   tagline: string
+  runtime: number
   genres: Array<{
     id: number
     name: string

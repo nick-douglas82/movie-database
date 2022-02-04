@@ -9,10 +9,11 @@
         <div class="flex flex-wrap items-center text-gray-400 text-sm">
           <AverageRating :rating="movie.vote_average" />
           <span class="mx-2">|</span>
-          <span>{{ formatDate(movie.release_date) }}</span>
+          <span>{{ formatDateToYear(movie.release_date) }}</span>
           <span class="mx-2">|</span>
-          <GenresList :genres="movie.genres" />
+          <span>{{ convertMinsToHrsMins(movie.runtime) }}</span>
           <div class="mt-8">
+            <GenresList :genres="movie.genres" />
             <h3 class="font-semibold text-lg text-gray-500">{{ movie.tagline }}</h3>
             <p class="text-gray-400">{{ movie.overview }}</p>
           </div>
@@ -42,7 +43,8 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { fetchMovie, fetchCredits } from '@/services/DataService'
-import { formatDate } from '@/lib/date'
+import { formatDateToYear } from '@/lib/date'
+import { convertMinsToHrsMins } from '@/lib/time'
 import { Movie, Credits } from '@/services/DataService'
 import GenresList from '@/components/GenreList.vue'
 import AverageRating from '@/components/AverageRating.vue'
@@ -78,7 +80,8 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      formatDate,
+      formatDateToYear,
+      convertMinsToHrsMins,
     }
   },
 })

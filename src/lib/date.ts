@@ -7,3 +7,10 @@ export const formatDate = (isoString: string) => {
   }
   return format(parseISO(isoString), 'do MMM yyyy')
 }
+
+export const formatDateToYear = (isoString: string) => {
+  if (!isoString) {
+    return undefined
+  }
+  return format(parseISO(isoString), 'yyyy')
+}
