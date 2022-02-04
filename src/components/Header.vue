@@ -3,7 +3,7 @@ import { DatabaseIcon } from '@heroicons/vue/solid'
 </script>
 
 <template>
-  <header class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full pt-4 flex justify-between">
+  <header class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-4 flex justify-between">
     <router-link to="/" class="flex items-center text-pink-600">
       <DatabaseIcon class="w-12 h-12 text-current" />
       <p

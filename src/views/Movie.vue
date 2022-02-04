@@ -1,28 +1,33 @@
 <template>
-  <div class="movie-info border-b border-gray-800">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16 flex flex-col md:flex-row">
-      <div class="flex-none">
-        <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" alt="poster" class="w-64 lg:w-96" />
-      </div>
-      <div class="md:ml-24">
-        <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ movie.title }}</h2>
-        <div class="flex flex-wrap items-center text-gray-400 text-sm">
-          <AverageRating :rating="movie.vote_average" />
-          <span class="mx-2">|</span>
-          <span>{{ formatDateToYear(movie.release_date) }}</span>
-          <span class="mx-2">|</span>
-          <span>{{ convertMinsToHrsMins(movie.runtime) }}</span>
-          <div class="mt-8">
-            <GenresList :genres="movie.genres" />
-            <h3 class="font-semibold text-lg text-gray-500">{{ movie.tagline }}</h3>
-            <p class="text-gray-400">{{ movie.overview }}</p>
-          </div>
-          <div class="mt-12">
-            <h4 class="text-lg font-bold">Featured Crew</h4>
-            <div class="flex mt-2">
-              <div class="mr-8" v-for="(crew, index) in credits.crew">
-                <div class="text-sm text-gray-400 font-semibold">{{ crew.job }}</div>
-                <div>{{ crew.name }}</div>
+  <div
+    class="movie-info relative"
+    :style="{
+      backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path})`,
+      backgroundPosition: 'center',
+    }"
+  >
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row relative z-10">
+      <div class="mt-auto">
+        <div class="p-6 mt-64" style="background: rgba(0, 0, 0, 0.192); backdrop-filter: blur(10px); width: 70%">
+          <h2 class="text-4xl mt-4 md:mt-0 font-semibold text-white">{{ movie.title }}</h2>
+          <div class="flex flex-wrap items-center text-white text-sm">
+            <AverageRating :rating="movie.vote_average" />
+            <span class="mx-2">|</span>
+            <span>{{ formatDateToYear(movie.release_date) }}</span>
+            <span class="mx-2">|</span>
+            <span>{{ convertMinsToHrsMins(movie.runtime) }}</span>
+            <div class="mt-8">
+              <GenresList :genres="movie.genres" />
+              <h3 class="font-semibold text-lg text-white">{{ movie.tagline }}</h3>
+              <p class="text-white">{{ movie.overview }}</p>
+            </div>
+            <div class="mt-12">
+              <h4 class="text-lg font-bold">Featured Crew</h4>
+              <div class="flex mt-2">
+                <div class="mr-8" v-for="(crew, index) in credits.crew">
+                  <div class="text-sm text-white font-semibold">{{ crew.job }}</div>
+                  <div>{{ crew.name }}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -65,7 +70,7 @@ export default defineComponent({
     const route = useRoute()
     if (route.params.id && typeof route.params.id === 'string') {
       state.movie = await fetchMovie(route.params.id)
-      const credits = await fetchCredits(route.params.id)
+      const credits = await fetchCredits(route.params.id, 'movie')
       const filteredCrew = credits.crew
         .filter(crewMember =>
           ['Director', 'Producer', 'Costume Design', 'Original Music Composer'].some(job => crewMember.job === job)
