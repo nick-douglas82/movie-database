@@ -1,14 +1,13 @@
 <template>
   <div
-    class="movie-info relative"
+    class="movie-info relative bg-center"
     :style="{
       backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path})`,
-      backgroundPosition: 'center',
     }"
   >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row relative z-10">
       <div class="mt-auto">
-        <div class="p-6 mt-64" style="background: rgba(0, 0, 0, 0.192); backdrop-filter: blur(10px); width: 70%">
+        <div class="p-6 mt-64 backdrop-blur-md bg-black/20 w-2/3">
           <h2 class="text-4xl mt-4 md:mt-0 font-semibold text-white">{{ movie.title }}</h2>
           <div class="flex flex-wrap items-center text-white text-sm">
             <AverageRating :rating="movie.vote_average" />
