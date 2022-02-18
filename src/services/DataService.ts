@@ -1,4 +1,9 @@
-import type { Person as PersonResponse, PersonCombinedCreditsResponse } from 'moviedb-promise/dist/request-types'
+import { MediaItem } from '@/lib/format'
+import type {
+  Person as PersonResponse,
+  PersonCombinedCreditsResponse,
+  PopularMoviesResponse,
+} from 'moviedb-promise/dist/request-types'
 
 export interface Movie {
   id: number
@@ -98,4 +103,36 @@ export const fetchActorCombinedCredits = async (id: string): Promise<PersonCombi
     `${import.meta.env.VITE_TMDB_URL}person/${id}/combined_credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
   )
   return await response.json()
+}
+
+export const fetchPopularMovies = async (): Promise<MediaItem[]> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  const json = await response.json()
+  return json.results
+}
+
+export const fetchNowPlaying = async (): Promise<MediaItem[]> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  const json = await response.json()
+  return json.results
+}
+
+export const fetchPopularTv = async (): Promise<MediaItem[]> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}tv/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  const json = await response.json()
+  return json.results
+}
+
+export const fetchTopRatedTv = async (): Promise<MediaItem[]> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}tv/top_rated?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  const json = await response.json()
+  return json.results
 }

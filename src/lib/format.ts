@@ -18,6 +18,17 @@ export type CombinedListItem = {
   subTitle?: string
 }
 
+export type MediaItem = {
+  id: number
+  poster_path: string
+  title?: string
+  name?: string
+  type: 'movie' | 'tv'
+  vote_average: number | null
+  release_date?: string
+  first_air_date?: string
+}
+
 export const formatMovie = (movie: MovieResult | MovieResponse): CombinedListItem => {
   return {
     tmdbId: movie.id ?? 0,
@@ -36,6 +47,20 @@ export const formatTvShow = (tvShow: TvResult | ShowResponse): CombinedListItem 
     title: tvShow.name || 'Unknown name',
     subTitle: formatDate(tvShow.first_air_date),
   }
+}
+
+export const formatMediaItems = (mediaItems: MediaItem[], type: string): any => {
+  return mediaItems.map(mediaItem => {
+    return {
+      id: mediaItem.id,
+      type: type,
+      title: mediaItem.title || mediaItem.name,
+      vote_average: mediaItem.vote_average || null,
+      release_date: mediaItem.release_date || null,
+      first_air_date: mediaItem.first_air_date || null,
+      poster_path: mediaItem.poster_path,
+    }
+  })
 }
 
 export const formatCredits = (data: PersonCombinedCreditsResponse): CombinedListItem[] => {
