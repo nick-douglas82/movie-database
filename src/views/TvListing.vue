@@ -1,11 +1,7 @@
 <template>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-10">
-    <MediaListing :media="popular">
-      <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Current Popular TV</h2>
-    </MediaListing>
-    <MediaListing :media="topRated">
-      <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Top Rated TV Shows</h2>
-    </MediaListing>
+    <MediaListing :media="popular">Current Popular TV</MediaListing>
+    <MediaListing :media="topRated">Top Rated TV Shows</MediaListing>
   </div>
 </template>
 

@@ -1,11 +1,7 @@
 <template>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-10">
-    <MediaListing :media="popular">
-      <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Current Popular Movies</h2>
-    </MediaListing>
-    <MediaListing :media="nowPlaying">
-      <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mt-12">Now Playing</h2>
-    </MediaListing>
+    <MediaListing :media="popular">Current Popular Movies</MediaListing>
+    <MediaListing :media="nowPlaying">Now Playing</MediaListing>
   </div>
 </template>
 
