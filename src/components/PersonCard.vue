@@ -2,7 +2,11 @@
   <div class="mt-4">
     <a :href="`/actors/${person.id}`">
       <img
-        :src="`https://image.tmdb.org/t/p/w300/${person.profile_path}`"
+        :src="
+          person.profile_path
+            ? `https://image.tmdb.org/t/p/w185/${person.profile_path}`
+            : `https://placehold.co/185x274`
+        "
         :alt="`Picture of actor: ${person.name}`"
         class="hover:opacity-75 transition ease-in-out duration-150 rounded-sm overflow-hidden"
       />
