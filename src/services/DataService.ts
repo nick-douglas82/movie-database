@@ -56,19 +56,15 @@ export interface Crew extends Person {
   job: string
 }
 
-// export interface Actor {
-//   id: number
-//   birthday: string
-//   known_for_department: string
-//   deathday: null | string
-//   name: string
-//   biography: string
-//   place_of_birth: string | null
-//   profile_path: string
-//   homepage: null | string
-// }
-
 export interface CombinedCredits extends Movie, TV {}
+
+export const fetchAllTrending = async (): Promise<MediaItem[]> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}trending/all/day?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  const json = await response.json()
+  return json.results
+}
 
 export const fetchMovie = async (id: string): Promise<Movie> => {
   const response = await window.fetch(

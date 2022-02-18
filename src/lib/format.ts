@@ -23,7 +23,7 @@ export type MediaItem = {
   poster_path: string
   title?: string
   name?: string
-  type: 'movie' | 'tv'
+  media_type: 'movie' | 'tv'
   vote_average: number | null
   release_date?: string
   first_air_date?: string
@@ -53,7 +53,7 @@ export const formatMediaItems = (mediaItems: MediaItem[], type: string): any => 
   return mediaItems.map(mediaItem => {
     return {
       id: mediaItem.id,
-      type: type,
+      media_type: type,
       title: mediaItem.title || mediaItem.name,
       vote_average: mediaItem.vote_average || null,
       release_date: mediaItem.release_date || null,

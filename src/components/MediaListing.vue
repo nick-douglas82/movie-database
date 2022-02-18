@@ -7,7 +7,7 @@
     <li v-for="mediaItem in media">
       <div class="mt-2">
         <router-link
-          :to="`/${mediaItem.type}/${mediaItem.id}`"
+          :to="`/${mediaItem.media_type}/${mediaItem.id}`"
           class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden hover:opacity-75 transition ease-in-out duration-150"
         >
           <img :src="`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${mediaItem.poster_path}`" alt="" />
@@ -21,7 +21,7 @@
               formatDateToYear(mediaItem.release_date || '') || formatDateToYear(mediaItem.first_air_date || '')
             }}</span>
           </div>
-          <router-link :to="`/${mediaItem.type}/${mediaItem.id}`" class="text-white">
+          <router-link :to="`/${mediaItem.media_type}/${mediaItem.id}`" class="text-white">
             <p class="pointer-events-none block truncate font-light text-base">
               {{ mediaItem.title || mediaItem.name }}
             </p>
