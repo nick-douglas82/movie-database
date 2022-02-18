@@ -8,12 +8,17 @@
       <div class="mt-2">
         <router-link
           :to="`/${mediaItem.media_type}/${mediaItem.id}`"
-          class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden hover:opacity-75 transition ease-in-out duration-150"
+          class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden"
         >
-          <img :src="`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${mediaItem.poster_path}`" alt="" />
+          <img
+            :src="`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${mediaItem.poster_path}`"
+            alt=""
+            class="hover:opacity-75 transition ease-in-out duration-150 block"
+          />
           <template v-if="mediaItem.vote_average && mediaItem.vote_average > 0">
             <AverageRating class="absolute top-1 right-1" :rating="mediaItem.vote_average" />
           </template>
+          <AddToList />
         </router-link>
         <div class="mt-2">
           <div class="flex movies-center text-gray-400 text-xs mt-1">
@@ -34,15 +39,17 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import AverageRating from '@/components/AverageRating.vue'
-import { formatDateToYear } from '@/lib/date'
-import { StarIcon } from '@heroicons/vue/solid'
 import { MediaItem } from '@/lib/format'
+import { formatDateToYear } from '@/lib/date'
+import AverageRating from '@/components/AverageRating.vue'
+import AddToList from '@/components/AddToList.vue'
+import { StarIcon } from '@heroicons/vue/solid'
 
 export default defineComponent({
   component: {
     StarIcon,
     AverageRating,
+    AddToList,
   },
   props: {
     media: {
@@ -56,6 +63,6 @@ export default defineComponent({
       formatDateToYear,
     }
   },
-  components: { AverageRating },
+  components: { AverageRating, AddToList },
 })
 </script>
