@@ -17,7 +17,7 @@
             <span>Average run time: {{ convertMinsToHrsMins(averageRunTime(tv.episode_run_time)) }}</span>
             <div class="mt-4">
               <GenresList :genres="tv.genres" />
-              <h3 class="font-semibold text-lg text-white mt-2">{{ tv.tagline }}</h3>
+              <h3 v-if="tv.tagline" class="font-semibold text-lg text-white mt-2">{{ tv.tagline }}</h3>
               <p class="text-white">{{ tv.overview }}</p>
             </div>
             <div class="mt-6">

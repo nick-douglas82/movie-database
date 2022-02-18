@@ -17,7 +17,7 @@
             <span>{{ convertMinsToHrsMins(movie.runtime) }}</span>
             <div class="mt-8">
               <GenresList :genres="movie.genres" />
-              <h3 class="font-semibold text-lg text-white">{{ movie.tagline }}</h3>
+              <h3 v-if="movie.tagline" class="font-semibold text-lg text-white">{{ movie.tagline }}</h3>
               <p class="text-white">{{ movie.overview }}</p>
             </div>
             <div class="mt-12">

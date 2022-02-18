@@ -1,3 +1,5 @@
+import type { Person as PersonResponse, PersonCombinedCreditsResponse } from 'moviedb-promise/dist/request-types'
+
 export interface Movie {
   id: number
   title: string
@@ -49,6 +51,20 @@ export interface Crew extends Person {
   job: string
 }
 
+// export interface Actor {
+//   id: number
+//   birthday: string
+//   known_for_department: string
+//   deathday: null | string
+//   name: string
+//   biography: string
+//   place_of_birth: string | null
+//   profile_path: string
+//   homepage: null | string
+// }
+
+export interface CombinedCredits extends Movie, TV {}
+
 export const fetchMovie = async (id: string): Promise<Movie> => {
   const response = await window.fetch(
     `${import.meta.env.VITE_TMDB_URL}movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
@@ -66,6 +82,20 @@ export const fetchTv = async (id: string): Promise<TV> => {
 export const fetchCredits = async (id: string, type: string): Promise<Credits> => {
   const response = await window.fetch(
     `${import.meta.env.VITE_TMDB_URL}${type}/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  return await response.json()
+}
+
+export const fetchActor = async (id: string): Promise<PersonResponse> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}person/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+  )
+  return await response.json()
+}
+
+export const fetchActorCombinedCredits = async (id: string): Promise<PersonCombinedCreditsResponse> => {
+  const response = await window.fetch(
+    `${import.meta.env.VITE_TMDB_URL}person/${id}/combined_credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
   )
   return await response.json()
 }

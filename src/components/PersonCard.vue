@@ -8,7 +8,7 @@
       />
     </a>
     <div class="mt-2">
-      <a :href="`/actors/${person.id}`" class="text font-semibold mt-2 hover:text-gray:300">{{ person.name }}</a>
+      <a :href="`/actor/${person.id}`" class="text font-semibold mt-2 hover:text-gray:300">{{ person.name }}</a>
       <div class="text-sm text-gray-400">{{ person.character }}</div>
     </div>
   </div>
