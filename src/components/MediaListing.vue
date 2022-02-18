@@ -8,7 +8,7 @@
       <div class="mt-2">
         <router-link
           :to="`/${mediaItem.type}/${mediaItem.id}`"
-          class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden"
+          class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden hover:opacity-75 transition ease-in-out duration-150"
         >
           <img :src="`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${mediaItem.poster_path}`" alt="" />
           <template v-if="mediaItem.vote_average && mediaItem.vote_average > 0">

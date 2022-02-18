@@ -1,15 +1,17 @@
 <template>
-  <div class="mt-8">
+  <div class="mt-4">
     <a :href="`/actors/${person.id}`">
       <img
         :src="`https://image.tmdb.org/t/p/w300/${person.profile_path}`"
         :alt="`Picture of actor: ${person.name}`"
-        class="hover:opacity-75 transition ease-in-out duration-150"
+        class="hover:opacity-75 transition ease-in-out duration-150 rounded-sm overflow-hidden"
       />
     </a>
     <div class="mt-2">
-      <a :href="`/actor/${person.id}`" class="text font-semibold mt-2 hover:text-gray:300">{{ person.name }}</a>
-      <div class="text-sm text-gray-400">{{ person.character }}</div>
+      <a :href="`/actor/${person.id}`" class="text-gray-400 text-xs font-semibold mt-2 hover:text-gray:300">{{
+        person.name
+      }}</a>
+      <div class="text-sm text-white">{{ person.character }}</div>
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@
       <div class="mt-auto">
         <div class="p-6 mt-64 backdrop-blur-md bg-black/20 w-2/3">
           <h2 class="text-4xl mt-4 md:mt-0 font-semibold text-white">{{ tv.name }}</h2>
-          <div class="flex flex-wrap items-center text-sm text-white">
+          <div class="flex flex-wrap items-center text-sm text-white mt-2">
             <AverageRating :rating="tv.vote_average" />
             <span class="mx-2">|</span>
             <span>{{ formatDateToYear(tv.first_air_date) }}</span>

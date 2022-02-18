@@ -9,7 +9,7 @@
       <div class="mt-auto">
         <div class="p-6 mt-64 backdrop-blur-md bg-black/20 w-2/3">
           <h2 class="text-4xl mt-4 md:mt-0 font-semibold text-white">{{ movie.title }}</h2>
-          <div class="flex flex-wrap items-center text-white text-sm">
+          <div class="flex flex-wrap items-center text-white text-sm mt-2">
             <AverageRating :rating="movie.vote_average" />
             <span class="mx-2">|</span>
             <span>{{ formatDateToYear(movie.release_date) }}</span>
@@ -36,7 +36,7 @@
   </div>
 
   <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 w-full px-4 py-16">
-    <h2 class="text-4xl font-semibold">Cast</h2>
+    <h2 class="text-4xl font-base text-white">Cast</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
       <PersonCard v-for="(cast, index) in credits.cast" :person="cast" />
     </div>
