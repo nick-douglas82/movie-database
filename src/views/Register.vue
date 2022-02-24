@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    HOME!
-  </div>
+  <div class="home">Register!</div>
 </template>
 
 <script setup lang="ts">
@@ -11,4 +9,3 @@ defineProps<{ msg: string }>()
 
 const count = ref(0)
 </script>
-

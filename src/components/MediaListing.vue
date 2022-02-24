@@ -4,8 +4,10 @@
     <span class="w-full h-0 border border-gray-500 flex-1 ml-6"></span>
   </h2>
   <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    <li v-for="mediaItem in media">
+    <li class="relative" v-for="mediaItem in media">
       <div class="mt-2">
+        <AddToList />
+
         <router-link
           :to="`/${mediaItem.media_type}/${mediaItem.id}`"
           class="text-lg mt-2 hover:text-gray-300 relative block rounded-md overflow-hidden"
@@ -18,7 +20,6 @@
           <template v-if="mediaItem.vote_average && mediaItem.vote_average > 0">
             <AverageRating class="absolute top-1 right-1" :rating="mediaItem.vote_average" />
           </template>
-          <AddToList />
         </router-link>
         <div class="mt-2">
           <div class="flex movies-center text-gray-400 text-xs mt-1">
