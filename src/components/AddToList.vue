@@ -16,7 +16,7 @@
       &times;
     </button>
 
-    <template v-if="isSignedIn">
+    <template v-if="isLoggedIn">
       <select class="w-full mb-8 text-black rounded-sm h-7">
         <option selected disabled>Select a list</option>
         <option>Nick List</option>
@@ -36,6 +36,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/store'
 import SignIn from '@/components/SignIn.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 
@@ -45,15 +47,16 @@ export default defineComponent({
     ButtonBase,
   },
   setup() {
+    const userStore = useUserStore()
     const isActive = ref(false)
-    const isSignedIn = ref(false)
+    const { isLoggedIn } = storeToRefs(userStore)
 
     const openModal = () => (isActive.value = true)
     const closeModal = () => (isActive.value = false)
 
     return {
+      isLoggedIn,
       isActive,
-      isSignedIn,
       openModal,
       closeModal,
       SignIn,
