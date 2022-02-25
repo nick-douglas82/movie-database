@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { getAuth } from 'firebase/auth'
+import { defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store'
 import { DatabaseIcon } from '@heroicons/vue/solid'
