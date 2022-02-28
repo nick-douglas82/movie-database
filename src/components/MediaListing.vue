@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { MediaItem } from '@/lib/format'
+import { formatDateToYear } from '@/lib/date'
+import AverageRating from '@/components/AverageRating.vue'
+import AddToList from '@/components/AddToList.vue'
+
+const props = defineProps<{
+  media: MediaItem[]
+}>()
+</script>
+
 <template>
   <h2 class="text-gray-500 tracking-wider text-lg mt-12 mb-4 flex items-center content-center">
     <slot />
@@ -37,33 +48,3 @@
     </li>
   </ul>
 </template>
-
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { MediaItem } from '@/lib/format'
-import { formatDateToYear } from '@/lib/date'
-import AverageRating from '@/components/AverageRating.vue'
-import AddToList from '@/components/AddToList.vue'
-import { StarIcon } from '@heroicons/vue/solid'
-
-export default defineComponent({
-  component: {
-    StarIcon,
-    AverageRating,
-    AddToList,
-  },
-  props: {
-    media: {
-      type: Object as PropType<MediaItem[]>,
-      default: null,
-    },
-  },
-  setup() {
-    return {
-      AverageRating,
-      formatDateToYear,
-    }
-  },
-  components: { AverageRating, AddToList },
-})
-</script>

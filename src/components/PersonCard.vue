@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { Person } from '@/services/DataService'
+import { defineComponent, PropType } from 'vue'
+
+const props = defineProps<{
+  person: Person
+}>()
+</script>
+
 <template>
   <div class="mt-4">
     <a :href="`/actors/${person.id}`">
@@ -19,17 +28,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { Person } from '@/services/DataService'
-import { defineComponent, PropType } from 'vue'
-
-export default defineComponent({
-  props: {
-    person: {
-      type: Object as PropType<Person>,
-      default: () => ({}),
-    },
-  },
-})
-</script>

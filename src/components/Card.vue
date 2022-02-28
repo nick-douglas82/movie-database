@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { formatDateToYear } from '@/lib/date'
+import type { Media } from '@/types/media'
+import AverageRating from '@/components/AverageRating.vue'
+
+const props = defineProps<{
+  value: Media
+}>()
+</script>
+
 <template>
   <div class="mt-2">
     <router-link :to="`/${value.media_type}/${value.id}`" class="text-lg mt-2 hover:text-gray-300">
@@ -19,29 +29,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { formatDateToYear } from '@/lib/date'
-import type { Media } from '@/types/media'
-import AverageRating from '@/components/AverageRating.vue'
-import { StarIcon } from '@heroicons/vue/solid'
-
-export default defineComponent({
-  components: {
-    AverageRating,
-    StarIcon,
-  },
-  props: {
-    value: {
-      type: Object as PropType<Media>,
-      required: true,
-    },
-  },
-  setup() {
-    return {
-      formatDateToYear,
-    }
-  },
-})
-</script>

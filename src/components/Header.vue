@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { getAuth, signOut } from 'firebase/auth'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/store'
+import { DatabaseIcon } from '@heroicons/vue/solid'
+import { LoginIcon } from '@heroicons/vue/outline'
+
+const userStore = useUserStore()
+const auth = getAuth()
+const { isLoggedIn } = storeToRefs(userStore)
+
+const signOutOfApp = () => signOut(auth)
+</script>
+
 <template>
   <header class="items-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-4 flex justify-between">
     <router-link to="/" class="logo flex text-white">
@@ -22,32 +36,7 @@
       class="ml-4 inline-block h-10 w-10 rounded-full"
       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
       alt=""
+      @click="signOutOfApp"
     />
   </header>
 </template>
-
-<script lang="ts">
-import { getAuth } from 'firebase/auth'
-import { defineComponent, ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/store'
-import { DatabaseIcon } from '@heroicons/vue/solid'
-import { LoginIcon } from '@heroicons/vue/outline'
-
-export default defineComponent({
-  components: {
-    DatabaseIcon,
-    LoginIcon,
-  },
-  setup() {
-    const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
-
-    return {
-      DatabaseIcon,
-      LoginIcon,
-      isLoggedIn,
-    }
-  },
-})
-</script>

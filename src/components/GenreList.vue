@@ -1,3 +1,14 @@
+<script setup lang="ts">
+type Genre = {
+  id: number
+  name: string
+}
+
+const props = defineProps<{
+  genres: Genre[]
+}>()
+</script>
+
 <template>
   <span>
     <template v-for="(genre, index) in genres">
@@ -5,21 +16,3 @@
     </template>
   </span>
 </template>
-
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-
-type Genre = {
-  id: number
-  name: string
-}
-
-export default defineComponent({
-  props: {
-    genres: {
-      type: Object as PropType<Genre[]>,
-      default: [],
-    },
-  },
-})
-</script>

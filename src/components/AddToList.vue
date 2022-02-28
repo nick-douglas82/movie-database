@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/store'
+import SignIn from '@/components/SignIn.vue'
+import ButtonBase from '@/components/ButtonBase.vue'
+
+const userStore = useUserStore()
+const isActive = ref(false)
+const { isLoggedIn } = storeToRefs(userStore)
+
+const openModal = () => (isActive.value = true)
+const closeModal = () => (isActive.value = false)
+</script>
+
 <template>
   <div
     class="cursor-pointer z-30 bg-pink-600 rounded-full text-white text-3xl w-9 h-9 flex items-center content-center text-center top-3 left-1 absolute hover:bg-green-300 hover:text-black transition ease-in-out duration-500"
@@ -33,35 +48,3 @@
     <SignIn v-else />
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/store'
-import SignIn from '@/components/SignIn.vue'
-import ButtonBase from '@/components/ButtonBase.vue'
-
-export default defineComponent({
-  components: {
-    SignIn,
-    ButtonBase,
-  },
-  setup() {
-    const userStore = useUserStore()
-    const isActive = ref(false)
-    const { isLoggedIn } = storeToRefs(userStore)
-
-    const openModal = () => (isActive.value = true)
-    const closeModal = () => (isActive.value = false)
-
-    return {
-      isLoggedIn,
-      isActive,
-      openModal,
-      closeModal,
-      SignIn,
-      ButtonBase,
-    }
-  },
-})
-</script>
