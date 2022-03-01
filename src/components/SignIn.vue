@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import { signIn } from '@/services/FireBase'
 import ButtonBase from '@/components/ButtonBase.vue'
 

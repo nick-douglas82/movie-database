@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, updateProfile, signInWithEmailAndPassword } from 'firebase/auth'
 import 'firebase/auth'
 import 'firebase/firestore'
 
@@ -18,8 +18,11 @@ export const register = (email, password, displayName) => {
   const auth = getAuth()
   return createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      // Signed in
-      return userCredential.user
+      updateProfile(auth.currentUser, {
+        displayName: displayName,
+      }).then(() => {
+        return userCredential.user
+      })
     })
     .catch(error => false)
 }

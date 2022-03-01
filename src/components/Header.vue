@@ -28,9 +28,9 @@ const signOutOfApp = () => signOut(auth)
       <router-link to="/tv" class="flex items-center text-white hover:text-green-300">TV Series</router-link>
     </nav>
     <input type="text" class="border border-green-300 px-6 h-8 rounded-full bg-gray-100 text-sm" placeholder="Search" />
-    <button v-if="!isLoggedIn" class="ml-4 text-white flex items-center content-center">
+    <router-link v-if="!isLoggedIn" to="/login" class="ml-4 text-white flex items-center content-center">
       Sign in <LoginIcon class="w-5 h-5 text-current ml-1" />
-    </button>
+    </router-link>
     <img
       v-else
       class="ml-4 inline-block h-10 w-10 rounded-full"
