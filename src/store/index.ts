@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 
-export interface User {}
+export interface User {
+  displayName: string
+}
 
 export const useUserStore = defineStore({
   id: 'userStore',

@@ -5,14 +5,14 @@ import Header from './components/Header.vue'
 
 const auth = getAuth()
 
-const mainStore = useUserStore()
+const userStore = useUserStore()
 onAuthStateChanged(auth, userCredential => {
   if (userCredential) {
-    mainStore.isLoggedIn = true
-    mainStore.user = userCredential
+    userStore.isLoggedIn = true
+    userStore.user = userCredential
   } else {
-    mainStore.isLoggedIn = false
-    mainStore.user = {}
+    userStore.isLoggedIn = false
+    userStore.user = {}
   }
 })
 </script>

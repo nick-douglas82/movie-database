@@ -2,6 +2,7 @@
 import { getAuth, signOut } from 'firebase/auth'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store'
+import Avatar from '@/components/Avatar.vue'
 import { DatabaseIcon } from '@heroicons/vue/solid'
 import { LoginIcon } from '@heroicons/vue/outline'
 
@@ -27,16 +28,9 @@ const signOutOfApp = () => signOut(auth)
       <router-link to="/movies" class="flex items-center text-white mr-5 hover:text-green-300">Movies</router-link>
       <router-link to="/tv" class="flex items-center text-white hover:text-green-300">TV Series</router-link>
     </nav>
-    <input type="text" class="border border-green-300 px-6 h-8 rounded-full bg-gray-100 text-sm" placeholder="Search" />
     <router-link v-if="!isLoggedIn" to="/login" class="ml-4 text-white flex items-center content-center">
       Sign in <LoginIcon class="w-5 h-5 text-current ml-1" />
     </router-link>
-    <img
-      v-else
-      class="ml-4 inline-block h-10 w-10 rounded-full"
-      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-      alt=""
-      @click="signOutOfApp"
-    />
+    <Avatar v-else @click="signOutOfApp" />
   </header>
 </template>
