@@ -1,6 +1,8 @@
+import { List } from '@/lib/api/lists'
 import { defineStore } from 'pinia'
 
 export interface User {
+  uid: string
   displayName: string
 }
 
@@ -9,5 +11,12 @@ export const useUserStore = defineStore({
   state: () => ({
     isLoggedIn: <boolean>false,
     user: <User>{},
+  }),
+})
+
+export const useListsStore = defineStore({
+  id: 'listsStore',
+  state: () => ({
+    lists: <List[]>[],
   }),
 })

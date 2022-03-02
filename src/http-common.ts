@@ -1,7 +1,8 @@
-export const APISettings = {
-  token: "",
-  headers: new Headers({
-    Accept: "application/json",
-  }),
-  baseURL: "https://api.themoviedb.org/3",
-};
+import axios from 'axios'
+
+export default axios.create({
+  baseURL: 'http://localhost:8080/api',
+  headers: {
+    'Content-type': 'application/json',
+  },
+})

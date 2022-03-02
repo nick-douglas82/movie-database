@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { getAuth, signOut } from 'firebase/auth'
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/store'
+import { useListsStore, useUserStore } from '@/store'
 import Avatar from '@/components/Avatar.vue'
 import { DatabaseIcon } from '@heroicons/vue/solid'
 import { LoginIcon } from '@heroicons/vue/outline'
 
 const userStore = useUserStore()
+const listsStore = useListsStore()
 const auth = getAuth()
 const { isLoggedIn } = storeToRefs(userStore)
 

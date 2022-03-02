@@ -118,8 +118,16 @@ export const fetchNowPlaying = async (): Promise<MediaItem[]> => {
 }
 
 export const fetchPopularTv = async (): Promise<MediaItem[]> => {
+  let fetchData = {
+    method: 'POST',
+    body: JSON.stringify('NICK TEST'),
+    headers: new Headers({
+      'Content-Type': 'application/json; charset=UTF-8',
+    }),
+  }
   const response = await window.fetch(
-    `${import.meta.env.VITE_TMDB_URL}tv/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+    `${import.meta.env.VITE_TMDB_URL}tv/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}`,
+    fetchData
   )
   const json = await response.json()
   return json.results
@@ -129,6 +137,13 @@ export const fetchTopRatedTv = async (): Promise<MediaItem[]> => {
   const response = await window.fetch(
     `${import.meta.env.VITE_TMDB_URL}tv/top_rated?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
   )
+  const json = await response.json()
+  return json.results
+}
+
+export const fetchUserLists = async (): Promise<MediaItem[]> => {
+  console.log('here')
+  const response = await window.fetch(`http://localhost:8080/api/lists`)
   const json = await response.json()
   return json.results
 }

@@ -1,16 +1,54 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/store'
+import { useListsStore, useUserStore } from '@/store'
+import { addToList, createList } from '@/lib/api/lists'
 import SignIn from '@/components/SignIn.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 
+export interface Test {
+  id: number
+  title: string
+  authorId: string
+  media: [
+    {
+      id: number
+      createdAt: string
+      updatedAt: string
+      mediaId: number
+      listId: number
+    }
+  ]
+}
+
+const props = defineProps<{
+  mediaId: number
+}>()
+
 const userStore = useUserStore()
+const listsStore = useListsStore()
 const isActive = ref(false)
+const listName = ref('')
+const selectedList = ref(null)
 const { isLoggedIn } = storeToRefs(userStore)
 
 const openModal = () => (isActive.value = true)
 const closeModal = () => (isActive.value = false)
+
+const createListAddMovie = () =>
+  createList(userStore.user.uid, listName.value, props.mediaId).then(list => {
+    listsStore.lists.push(list)
+    listName.value = ''
+  })
+
+const addToExistingList = () => {
+  addToList(selectedList.value, props.mediaId).then(mediaItem => {
+    const listInStore = listsStore.lists.find(media => {
+      media.id === selectedList.value
+    })
+    listInStore?.media.push(mediaItem as never)
+  })
+}
 </script>
 
 <template>
@@ -32,17 +70,18 @@ const closeModal = () => (isActive.value = false)
     </button>
 
     <template v-if="isLoggedIn">
-      <select class="w-full mb-8 text-black rounded-sm h-7">
-        <option selected disabled>Select a list</option>
-        <option>Nick List</option>
-        <option>Nick List2</option>
-        <option>Nick List3</option>
-      </select>
+      <template v-if="listsStore.lists.length > 0">
+        <select @change="addToExistingList" v-model="selectedList" class="w-full mb-8 text-black rounded-sm h-7">
+          <option disabled :value="null">Select a list</option>
+          <option v-for="(list, index) in listsStore.lists" :value="list.id">{{ list.title }}</option>
+        </select>
 
-      <p class="text-sm font-bold mb-2">Or create a new list</p>
+        <p class="text-sm font-bold mb-2">Or create a new list &amp; add movie</p>
+      </template>
+      <p v-else class="text-sm font-bold mb-2">Create a new list &amp; add movie</p>
 
-      <input type="text" placeholder="List name" class="px-2 rounded-sm h-7 w-full" />
-      <ButtonBase>Create &amp; Add</ButtonBase>
+      <input v-model="listName" type="text" placeholder="List name" class="text-gray-600 px-2 rounded-sm h-7 w-full" />
+      <ButtonBase @click="createListAddMovie">Create &amp; Add</ButtonBase>
     </template>
 
     <SignIn v-else />
