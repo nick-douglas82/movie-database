@@ -14,6 +14,13 @@ export const useUserStore = defineStore({
   }),
 })
 
+export const useMovieStore = defineStore({
+  id: 'movieStore',
+  state: () => ({
+    movies: [],
+  }),
+})
+
 export const useListsStore = defineStore({
   id: 'listsStore',
   state: () => ({

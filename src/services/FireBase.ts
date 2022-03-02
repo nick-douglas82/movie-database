@@ -7,14 +7,14 @@ export type SignInParams = {
   password: string
 }
 
-export const signIn = (email, password) => {
+export const signIn = (email: string, password: string) => {
   const auth = getAuth()
   return signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => true)
     .catch(error => false)
 }
 
-export const register = (email, password, displayName) => {
+export const register = (email: string, password: string, displayName: string) => {
   const auth = getAuth()
   return createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {

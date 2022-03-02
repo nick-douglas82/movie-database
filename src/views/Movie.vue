@@ -8,6 +8,10 @@ import { Movie, Credits } from '@/services/DataService'
 import GenresList from '@/components/GenreList.vue'
 import AverageRating from '@/components/AverageRating.vue'
 import PersonCard from '@/components/PersonCard.vue'
+import { useMovieStore } from '@/store'
+import { startAfter } from 'firebase/firestore'
+
+const movieStore = useMovieStore()
 
 const state = reactive({
   movie: {} as Movie,
@@ -16,7 +20,10 @@ const state = reactive({
 
 const route = useRoute()
 if (route.params.id && typeof route.params.id === 'string') {
-  state.movie = await fetchMovie(route.params.id)
+  state.movie = movieStore.movies[route.params.id as any]
+    ? movieStore.movies[route.params.id as any]
+    : await fetchMovie(route.params.id)
+
   const credits = await fetchCredits(route.params.id, 'movie')
   const filteredCrew = credits.crew
     .filter(crewMember =>
@@ -28,6 +35,8 @@ if (route.params.id && typeof route.params.id === 'string') {
     cast: credits.cast.slice(0, 6),
     crew: filteredCrew,
   }
+
+  movieStore.movies[route.params.id] = state.movie
 }
 </script>
 
