@@ -46,12 +46,6 @@ export const addToList = (listId: number | null, mediaId: number) => {
       listId: listId,
     }),
   })
-  // return http.post<MediaPostResponse>(`/list/${listId}`, {
-  //   body: {
-  //     mediaId: mediaId,
-  //     listId: listId,
-  //   },
-  // })
 }
 
 export const api = async <T>(url: string, init?: RequestInit): Promise<T> => {
