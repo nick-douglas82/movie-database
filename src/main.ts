@@ -19,6 +19,6 @@ initializeApp(firebaseConfig)
 export const db = getFirestore()
 
 const app = createApp(App)
-app.use(router)
 app.use(createPinia())
+app.use(router)
 app.mount('#app')

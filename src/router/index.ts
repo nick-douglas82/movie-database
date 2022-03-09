@@ -1,52 +1,50 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Movies from '../views/Movies.vue'
-import Movie from '../views/Movie.vue'
-import Actor from '../views/Actor.vue'
-import Tv from '../views/Tv.vue'
-import TvListing from '../views/TvListing.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register,
+    component: () => import(/* webpackChunkName: "Register" */ '../views/Register.vue'),
+  },
+  {
+    path: '/lists',
+    name: 'Lists',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/Lists.vue'),
   },
   {
     path: '/movies/',
     name: 'Movies',
-    component: Movies,
+    component: () => import(/* webpackChunkName: "Movies" */ '../views/Movies.vue'),
   },
   {
     path: '/movie/:id',
     name: 'Movie',
-    component: Movie,
+    component: () => import(/* webpackChunkName: "HoMovieme" */ '../views/Movie.vue'),
   },
   {
     path: '/tv/',
     name: 'TvListing',
-    component: TvListing,
+    component: () => import(/* webpackChunkName: "TvListing" */ '../views/TvListing.vue'),
   },
   {
     path: '/tv/:id',
     name: 'Tv',
-    component: Tv,
+    component: () => import(/* webpackChunkName: "Tv" */ '../views/Tv.vue'),
   },
   {
     path: '/actors/:id',
     name: 'Actor',
-    component: Actor,
+    component: () => import(/* webpackChunkName: "Actor" */ '../views/Actor.vue'),
   },
 ]
 const router = createRouter({

@@ -23,8 +23,8 @@ onAuthStateChanged(auth, userCredential => {
 </script>
 
 <template>
-  <div id="app" class="h-full flex flex-col flex-1 bg-gray-700">
-    <div class="h-full flex flex-col">
+  <div id="app" class="flex flex-col flex-1 h-full bg-gray-700">
+    <div class="flex flex-col h-full">
       <Header />
       <Suspense>
         <template #default>

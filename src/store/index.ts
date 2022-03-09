@@ -1,4 +1,4 @@
-import { List } from '@/lib/api/lists'
+import { ListWithMedia } from './../lib/api/lists'
 import { defineStore } from 'pinia'
 
 export interface User {
@@ -24,6 +24,6 @@ export const useMovieStore = defineStore({
 export const useListsStore = defineStore({
   id: 'listsStore',
   state: () => ({
-    lists: <List[]>[],
+    lists: <ListWithMedia[]>[],
   }),
 })

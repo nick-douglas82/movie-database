@@ -2,27 +2,13 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
-import { addToList, createList } from '@/lib/api/lists'
+import { addToList, createListWithMedia } from '@/lib/api/lists'
 import SignIn from '@/components/SignIn.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
-
-export interface Test {
-  id: number
-  title: string
-  authorId: string
-  media: [
-    {
-      id: number
-      createdAt: string
-      updatedAt: string
-      mediaId: number
-      listId: number
-    }
-  ]
-}
+import { MediaItem } from '@/lib/format'
 
 const props = defineProps<{
-  mediaId: number
+  mediaItem: MediaItem
 }>()
 
 const userStore = useUserStore()
@@ -35,18 +21,18 @@ const { isLoggedIn } = storeToRefs(userStore)
 const openModal = () => (isActive.value = true)
 const closeModal = () => (isActive.value = false)
 
-const createListAddMovie = () =>
-  createList(userStore.user.uid, listName.value, props.mediaId).then(list => {
+const createListAddMovie = () => {
+  createListWithMedia(userStore.user.uid, listName.value, props.mediaItem).then(list => {
     listsStore.lists.push(list)
     listName.value = ''
   })
+}
 
 const addToExistingList = () => {
-  addToList(selectedList.value, props.mediaId).then(mediaItem => {
-    const listInStore = listsStore.lists.find(media => {
-      media.id === selectedList.value
-    })
-    listInStore?.media.push(mediaItem as never)
+  addToList(selectedList.value, props.mediaItem).then(mediaItem => {
+    const listInStore = listsStore.lists.find(media => media.id === selectedList.value)
+    listInStore?.media.push(mediaItem)
+    selectedList.value = null
   })
 }
 </script>

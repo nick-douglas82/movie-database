@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { reactive } from 'vue'
 import MediaListing from '@/components/MediaListing.vue'
 import { MediaItem } from '@/lib/format'
 import { fetchAllTrending } from '@/services/DataService'
