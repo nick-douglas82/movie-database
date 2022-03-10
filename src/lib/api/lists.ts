@@ -8,7 +8,10 @@ export interface List {
   title: string
 }
 
-export interface ListWithMedia extends List {
+export type ListWithMedia = {
+  authorId: string
+  id: number
+  title: string
   media: Array<Media>
 }
 
@@ -29,9 +32,8 @@ export const getAllLists = (uid: string) => {
   //     userId: uid,
   //   },
   // })
-  return api<List>(`/users/${uid}`, {
+  return api<ListWithMedia>(`/users/${uid}`, {
     method: 'GET',
-    mode: 'no-cors',
     ...defaultOptions,
     // body: JSON.stringify({
     //   userId: uid,
