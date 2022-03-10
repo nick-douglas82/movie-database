@@ -9,7 +9,6 @@ import GenresList from '@/components/GenreList.vue'
 import AverageRating from '@/components/AverageRating.vue'
 import PersonCard from '@/components/PersonCard.vue'
 import { useMovieStore } from '@/store'
-import { startAfter } from 'firebase/firestore'
 
 const movieStore = useMovieStore()
 
@@ -36,7 +35,7 @@ if (route.params.id && typeof route.params.id === 'string') {
     crew: filteredCrew,
   }
 
-  // movieStore.movies[route.params.id] = state.movie
+  movieStore.movies[parseInt(route.params.id)] = state.movie
 }
 </script>
 

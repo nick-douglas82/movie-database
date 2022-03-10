@@ -23,7 +23,7 @@ onAuthStateChanged(auth, userCredential => {
     userStore.isLoggedIn = true
     userStore.user = userCredential
     getAllLists(userStore.user.uid).then(lists => {
-      listsStore.lists = lists
+      listsStore.lists = lists as any
     })
   } else {
     userStore.isLoggedIn = false

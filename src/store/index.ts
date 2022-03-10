@@ -1,5 +1,6 @@
 import { ListWithMedia } from './../lib/api/lists'
 import { defineStore } from 'pinia'
+import { Movie } from '@/services/DataService'
 
 export interface UserInfo {
   displayName: string | null
@@ -21,7 +22,7 @@ export const useUserStore = defineStore({
 export const useMovieStore = defineStore({
   id: 'movieStore',
   state: () => ({
-    movies: [],
+    movies: <Movie[]>[],
   }),
 })
 

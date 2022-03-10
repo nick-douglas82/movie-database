@@ -27,17 +27,9 @@ export type Media = {
 }
 
 export const getAllLists = (uid: string) => {
-  // return http.get<List[]>('/lists', {
-  //   params: {
-  //     userId: uid,
-  //   },
-  // })
   return api<ListWithMedia>(`/users/${uid}`, {
     method: 'GET',
     ...defaultOptions,
-    // body: JSON.stringify({
-    //   userId: uid,
-    // }),
   })
 }
 

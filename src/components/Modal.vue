@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useListsStore, useUserStore } from '@/store'
-import { createNewList } from '@/lib/api/lists'
+import { createNewList, ListWithMedia } from '@/lib/api/lists'
 import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import { XIcon } from '@heroicons/vue/outline'
@@ -23,7 +23,7 @@ const closeModal = () => {
 
 const createList = () => {
   createNewList(userStore.user.uid, listName.value).then(list => {
-    // listsStore.lists.push(list)
+    listsStore.lists.push(list as ListWithMedia)
     listName.value = ''
     closeModal()
   })
