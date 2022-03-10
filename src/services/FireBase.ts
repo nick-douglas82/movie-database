@@ -18,11 +18,11 @@ export const register = (email: string, password: string, displayName: string) =
   const auth = getAuth()
   return createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      updateProfile(auth.currentUser, {
-        displayName: displayName,
-      }).then(() => {
-        return userCredential.user
-      })
+      // updateProfile(auth.currentUser, {
+      //   displayName: displayName,
+      // }).then(() => {
+      //   return userCredential.user
+      // })
     })
     .catch(error => false)
 }

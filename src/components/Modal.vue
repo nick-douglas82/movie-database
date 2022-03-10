@@ -23,7 +23,7 @@ const closeModal = () => {
 
 const createList = () => {
   createNewList(userStore.user.uid, listName.value).then(list => {
-    listsStore.lists.push(list)
+    // listsStore.lists.push(list)
     listName.value = ''
     closeModal()
   })
@@ -39,8 +39,8 @@ open.value = props.isOpen
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="closeModal">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="closeModal">
+      <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -50,7 +50,7 @@ open.value = props.isOpen
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <DialogOverlay class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
         </TransitionChild>
 
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -64,17 +64,17 @@ open.value = props.isOpen
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
+            class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
           >
-            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-              <button type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500" @click="closeModal">
+            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+              <button type="button" class="text-gray-400 bg-white rounded-md hover:text-gray-500" @click="closeModal">
                 <span class="sr-only">Close</span>
-                <XIcon class="h-6 w-6" aria-hidden="true" />
+                <XIcon class="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
             <div>
               <div class="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
+                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                   Create a new list
                 </DialogTitle>
                 <div class="mt-2">
@@ -82,12 +82,12 @@ open.value = props.isOpen
                     v-model="listName"
                     type="text"
                     placeholder="List name"
-                    class="text-gray-600 px-2 rounded-md h-12 w-full border border-gray-500"
+                    class="w-full h-12 px-2 text-gray-600 border border-gray-500 rounded-md"
                   />
                 </div>
               </div>
             </div>
-            <div class="mt-5 sm:mt-6 text-center">
+            <div class="mt-5 text-center sm:mt-6">
               <ButtonBase class="text-white" @click="createList">Create List</ButtonBase>
             </div>
           </div>

@@ -36,22 +36,22 @@ if (route.params.id && typeof route.params.id === 'string') {
     crew: filteredCrew,
   }
 
-  movieStore.movies[route.params.id] = state.movie
+  // movieStore.movies[route.params.id] = state.movie
 }
 </script>
 
 <template>
   <div
-    class="movie-info relative bg-center"
+    class="relative bg-center movie-info"
     :style="{
       backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${state.movie.backdrop_path})`,
     }"
   >
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row relative z-10">
+    <div class="relative z-10 flex flex-col w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 md:flex-row">
       <div class="mt-auto">
-        <div class="p-6 mt-64 backdrop-blur-md bg-black/20 w-2/3">
-          <h2 class="text-4xl mt-4 md:mt-0 font-semibold text-white">{{ state.movie.title }}</h2>
-          <div class="flex flex-wrap items-center text-white text-sm mt-2">
+        <div class="w-2/3 p-6 mt-64 backdrop-blur-md bg-black/20">
+          <h2 class="mt-4 text-4xl font-semibold text-white md:mt-0">{{ state.movie.title }}</h2>
+          <div class="flex flex-wrap items-center mt-2 text-sm text-white">
             <AverageRating :rating="state.movie.vote_average" />
             <span class="mx-2">|</span>
             <span>{{ formatDateToYear(state.movie.release_date) }}</span>
@@ -59,14 +59,14 @@ if (route.params.id && typeof route.params.id === 'string') {
             <span>{{ convertMinsToHrsMins(state.movie.runtime) }}</span>
             <div class="mt-8">
               <GenresList :genres="state.movie.genres" />
-              <h3 v-if="state.movie.tagline" class="font-semibold text-lg text-white">{{ state.movie.tagline }}</h3>
+              <h3 v-if="state.movie.tagline" class="text-lg font-semibold text-white">{{ state.movie.tagline }}</h3>
               <p class="text-white">{{ state.movie.overview }}</p>
             </div>
             <div class="mt-12">
               <h4 class="text-lg font-bold">Featured Crew</h4>
               <div class="flex mt-2">
                 <div class="mr-8" v-for="(crew, index) in state.credits.crew">
-                  <div class="text-sm text-white font-semibold">{{ crew.job }}</div>
+                  <div class="text-sm font-semibold text-white">{{ crew.job }}</div>
                   <div>{{ crew.name }}</div>
                 </div>
               </div>
@@ -77,9 +77,9 @@ if (route.params.id && typeof route.params.id === 'string') {
     </div>
   </div>
 
-  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 w-full px-4 py-16">
-    <h2 class="text-4xl font-base text-white">Cast</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+  <div class="w-full px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <h2 class="text-4xl text-white font-base">Cast</h2>
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
       <PersonCard v-for="(cast, index) in state.credits.cast" :person="cast" />
     </div>
   </div>

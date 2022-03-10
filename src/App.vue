@@ -11,12 +11,12 @@ const userStore = useUserStore()
 onAuthStateChanged(auth, userCredential => {
   if (userCredential) {
     userStore.isLoggedIn = true
-    userStore.user = userCredential
+    // userStore.user = userCredential
 
-    getAllLists(userStore.user.uid).then(lists => (listsStore.lists = lists.data))
+    // getAllLists(userStore.user.uid).then(lists => (listsStore.lists = lists.data))
   } else {
     userStore.isLoggedIn = false
-    userStore.user = {}
+    // userStore.user = {}
     listsStore.lists = []
   }
 })
