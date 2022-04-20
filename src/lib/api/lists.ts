@@ -90,7 +90,9 @@ export const deleteList = (listId: number) => {
 }
 
 export const api = async <T>(url: string, init?: RequestInit): Promise<T> => {
-  const apiUrl = `http://localhost:3000/api${url}`
+  const apiUrl = `${
+    import.meta.env.DEV ? import.meta.env.VITE_LOCAL_DB_API : import.meta.env.VITE_PROD_DB_API
+  }/api${url}`
   const response = await fetch(apiUrl, {
     ...init,
   })
