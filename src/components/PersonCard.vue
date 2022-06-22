@@ -9,7 +9,7 @@ const props = defineProps<{
 
 <template>
   <div class="mt-4">
-    <a :href="`/actors/${person.id}`">
+    <router-link :to="`/actors/${person.id}`">
       <img
         :src="
           person.profile_path
@@ -17,13 +17,13 @@ const props = defineProps<{
             : `https://placehold.co/185x274`
         "
         :alt="`Picture of actor: ${person.name}`"
-        class="hover:opacity-75 transition ease-in-out duration-150 rounded-sm overflow-hidden"
+        class="overflow-hidden transition duration-150 ease-in-out rounded-sm hover:opacity-75"
       />
-    </a>
+    </router-link>
     <div class="mt-2">
-      <a :href="`/actor/${person.id}`" class="text-gray-400 text-xs font-semibold mt-2 hover:text-gray:300">{{
+      <router-link :to="`/actors/${person.id}`" class="mt-2 text-xs font-semibold text-gray-400 hover:text-gray:300">{{
         person.name
-      }}</a>
+      }}</router-link>
       <div class="text-sm text-white">{{ person.character }}</div>
     </div>
   </div>

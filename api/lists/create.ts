@@ -8,11 +8,6 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     response.status(422).json('Title is a required field')
   }
 
-  // let mediaArray: [] = [];
-  // if (media) {
-  //   mediaArray.push(media)
-  // }
-
   try {
     const prisma = new PrismaClient();
     const id = userId.toString();

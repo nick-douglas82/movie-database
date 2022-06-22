@@ -46,13 +46,18 @@ export const createNewList = async (id: number, title: string, media: any = {}) 
 
   transactionStore.setIsLoading(true);
 
+  let mediaItem = []
+  if (Object.entries(media).length > 0) {
+    mediaItem = media
+  }
+
   const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/create`, {
     method: "POST",
     ...defaultOptions,
     body: JSON.stringify({
       userId: id,
       title, 
-      media,
+      media: mediaItem,
     }),
   });
   transactionStore.setIsLoading(false);
