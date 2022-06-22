@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { logInUser } from '@/lib/api/user';
 import ButtonBase from '@/components/ButtonBase.vue'
 
-const email = ref('')
-const password = ref('')
+const email: Ref<string> = ref('')
+const password: Ref<string> = ref('')
 
 const signIntoApp = async () => await logInUser(email.value, password.value)
 </script>

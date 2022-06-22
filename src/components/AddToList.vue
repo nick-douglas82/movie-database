@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { Ref, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
 import { addToList, createNewList } from '@/lib/api/lists';
@@ -14,9 +14,9 @@ const props = defineProps<{
 
 const userStore = useUserStore()
 const listsStore = useListsStore()
-const isActive = ref(false)
-const listName = ref('')
-const selectedList = ref(null)
+const isActive: Ref<boolean> = ref(false)
+const listName: Ref<string> = ref('')
+const selectedList: Ref<number | null> = ref(null)
 const { isLoggedIn } = storeToRefs(userStore)
 
 const openModal = () => (isActive.value = true)

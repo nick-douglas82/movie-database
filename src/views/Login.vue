@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ButtonBase from '@/components/ButtonBase.vue'
 import { logInUser } from '../lib/api/user';
 
 const router = useRouter()
 
-const email = ref('')
-const password = ref('')
+const email: Ref<string> = ref('')
+const password: Ref<string>= ref('')
 
 const signIn = async () => {
     logInUser(email.value, password.value)

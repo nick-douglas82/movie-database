@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, unref } from 'vue'
+import { reactive, Ref, ref, unref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
 import router from '@/router'
@@ -21,8 +21,8 @@ if (!isLoggedIn.value) {
 
 getListsPopulateStore()
 
-const modalOpen = ref(false)
-const editListNameModalOpen = ref(false)
+const modalOpen: Ref<boolean> = ref(false)
+const editListNameModalOpen: Ref<boolean> = ref(false)
 const selectedList = reactive({
   name: '',
   listId: <null | number>null,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { Ref, ref, watch } from 'vue'
 import { useListsStore, useUserStore } from '@/store'
 import { createNewList, ListWithMedia } from '@/lib/api/lists'
 import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
@@ -13,8 +13,8 @@ const props = defineProps<{
   isOpen: boolean
 }>()
 
-const open = ref(false)
-const listName = ref('')
+const open: Ref<boolean> = ref(false)
+const listName: Ref<string> = ref('')
 
 const closeModal = () => {
   open.value = false
