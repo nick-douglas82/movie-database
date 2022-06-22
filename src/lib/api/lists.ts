@@ -1,6 +1,6 @@
-import http from '@/http-common'
 import { MediaItem } from '../format'
 import defaultOptions from './defaultOptions'
+import { useErrorStore, useTransactionStore } from "../../store";
 
 export interface List {
   authorId: string
@@ -26,22 +26,37 @@ export type Media = {
   title: string
 }
 
-export const getAllLists = (uid: string) => {
-  return api<ListWithMedia>(`/users/${uid}`, {
-    method: 'GET',
+export const getAllLists = async (id: string) => {
+  const errorStore = useErrorStore();
+  const transactionStore = useTransactionStore();
+
+  transactionStore.setIsLoading(true);
+
+  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/user/${id}`, {
+    method: "GET",
     ...defaultOptions,
-  })
+  });
+  transactionStore.setIsLoading(false);
+  return await response.json();
 }
 
-export const createNewList = (uid: string, title: string) => {
-  return api<List>('/list/new', {
-    method: 'POST',
+export const createNewList = async (id: number, title: string, media: any = {}) => {
+  const errorStore = useErrorStore();
+  const transactionStore = useTransactionStore();
+
+  transactionStore.setIsLoading(true);
+
+  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/create`, {
+    method: "POST",
     ...defaultOptions,
     body: JSON.stringify({
-      userId: uid,
-      title: title,
+      userId: id,
+      title, 
+      media,
     }),
-  })
+  });
+  transactionStore.setIsLoading(false);
+  return await response.json();
 }
 
 export const createListWithMedia = (uid: string, title: string, mediaItem: MediaItem) => {
@@ -56,37 +71,53 @@ export const createListWithMedia = (uid: string, title: string, mediaItem: Media
   })
 }
 
-export const addToList = (listId: number | null, mediaItem: MediaItem) => {
-  return api<Media>(`/list/${listId}`, {
-    method: 'POST',
+export const addToList = async (listId: number | null, mediaItem: {}) => {
+  const errorStore = useErrorStore();
+  const transactionStore = useTransactionStore();
+
+  transactionStore.setIsLoading(true);
+
+  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
+    method: "POST",
     ...defaultOptions,
     body: JSON.stringify({
       mediaItem: mediaItem,
       listId: listId,
     }),
-  })
+  });
+  transactionStore.setIsLoading(false);
+  return await response.json();
 }
 
-export const updateListName = (uid: string, listId: number | null, name: string) => {
-  return api<List>(`/list/${listId}`, {
-    method: 'PATCH',
+export const updateListName = async (uid: string, listId: number | null, name: string) => {
+  const errorStore = useErrorStore();
+  const transactionStore = useTransactionStore();
+
+  transactionStore.setIsLoading(true);
+
+  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
+    method: "PATCH",
     ...defaultOptions,
-    body: JSON.stringify({
-      userId: uid,
-      title: name,
-      listId: listId,
-    }),
-  })
+    body: JSON.stringify({ uid, listId, name }),
+  });
+  transactionStore.setIsLoading(false);
+  return await response.json();
 }
 
-export const deleteList = (listId: number) => {
-  return api<List>(`/list/${listId}`, {
-    method: 'DELETE',
+
+
+export const deleteList = async (listId: number) => {
+  const errorStore = useErrorStore();
+  const transactionStore = useTransactionStore();
+
+  transactionStore.setIsLoading(true);
+
+  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
+    method: "DELETE",
     ...defaultOptions,
-    body: JSON.stringify({
-      listId: listId,
-    }),
-  })
+  });
+  transactionStore.setIsLoading(false);
+  return await response.json();
 }
 
 export const api = async <T>(url: string, init?: RequestInit): Promise<T> => {

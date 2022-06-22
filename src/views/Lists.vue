@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref, unref } from 'vue'
-import { deleteList, Media, updateListName } from '@/lib/api/lists'
+import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
+import router from '@/router'
+import { deleteList, Media, updateListName } from '@/lib/api/lists'
+import { getListsPopulateStore } from '@/lib/helpers/lists'
+
 import { PlusIcon } from '@heroicons/vue/solid'
 import ButtonBase from '@/components/ButtonBase.vue'
 import Modal from '@/components/Modal.vue'
@@ -10,6 +14,13 @@ import ContextMenu from '@/components/ContextMenu.vue'
 
 const listsStore = useListsStore()
 const userStore = useUserStore()
+const { isLoggedIn } = storeToRefs(userStore)
+if (!isLoggedIn.value) {
+  router.push('/')
+}
+
+getListsPopulateStore()
+
 const modalOpen = ref(false)
 const editListNameModalOpen = ref(false)
 const selectedList = reactive({
@@ -17,7 +28,7 @@ const selectedList = reactive({
   listId: <null | number>null,
 })
 
-const slicedMediaList = (media: Media[]) => media.slice(0, 4)
+const slicedMediaList = (media: any) => media.slice(0, 4)
 
 const editListName = (name: string, listId: number) => {
   editListNameModalOpen.value = true
@@ -26,7 +37,12 @@ const editListName = (name: string, listId: number) => {
 }
 
 const updateList = (updatedName: string) => {
-  updateListName(userStore.user.uid, selectedList.listId, unref(updatedName)).then(list => {
+  if (!userStore.user.id) {
+    return
+  }
+
+  const userId = userStore.user.id?.toString();
+  updateListName(userId, selectedList.listId, unref(updatedName)).then(list => {
     const listInStore = listsStore.lists.find(storedList => storedList.id === list.id)
 
     if (listInStore) {

@@ -22,11 +22,13 @@ const closeModal = () => {
 }
 
 const createList = () => {
-  createNewList(userStore.user.uid, listName.value).then(list => {
-    listsStore.lists.push(list as ListWithMedia)
-    listName.value = ''
-    closeModal()
-  })
+  if (userStore.user.id) {
+    createNewList(userStore.user.id, listName.value).then((list) => {
+      listsStore.lists.push(list)
+      listName.value = ''
+      closeModal()
+    })
+  }
 }
 
 watch(

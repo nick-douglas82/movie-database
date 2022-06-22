@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
-import { addToList, createListWithMedia } from '@/lib/api/lists'
+import { addToList, createNewList } from '@/lib/api/lists';
+import { getListsPopulateStore } from '@/lib/helpers/lists';
 import SignIn from '@/components/SignIn.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import { MediaItem } from '@/lib/format'
@@ -21,11 +22,25 @@ const { isLoggedIn } = storeToRefs(userStore)
 const openModal = () => (isActive.value = true)
 const closeModal = () => (isActive.value = false)
 
+watch(isLoggedIn, (() => {
+  if (isLoggedIn.value) {
+    getListsPopulateStore()
+  }
+}))
+
 const createListAddMovie = () => {
-  createListWithMedia(userStore.user.uid, listName.value, props.mediaItem).then(list => {
-    listsStore.lists.push(list)
-    listName.value = ''
-  })
+  const mediaItem = {
+    title: props.mediaItem.title,
+    mediaId: props.mediaItem.id,
+    type: props.mediaItem.media_type,
+    imageUrl: props.mediaItem.poster_path
+  }
+  if (userStore.user.id) {
+    createNewList(userStore.user.id, listName.value, mediaItem).then((list) => {
+      listsStore.lists.push(list)
+      listName.value = ''
+    })
+  }
 }
 
 const addToExistingList = () => {
@@ -33,23 +48,24 @@ const addToExistingList = () => {
     const listInStore = listsStore.lists.find(media => media.id === selectedList.value)
     listInStore?.media.push(mediaItem)
     selectedList.value = null
+    closeModal()
   })
 }
 </script>
 
 <template>
   <div
-    class="cursor-pointer z-30 bg-pink-600 rounded-full text-white text-3xl w-9 h-9 flex items-center content-center text-center top-3 left-1 absolute hover:bg-green-300 hover:text-black transition ease-in-out duration-500"
+    class="absolute z-30 flex items-center content-center text-3xl text-center text-white transition duration-500 ease-in-out bg-pink-600 rounded-full cursor-pointer w-9 h-9 top-3 left-1 hover:bg-green-300 hover:text-black"
     @click="openModal"
   >
-    <span class="w-full relative" style="top: -2px">+</span>
+    <span class="relative w-full" style="top: -2px">+</span>
   </div>
   <div
     v-if="isActive"
-    class="rounded-md overflow-hidden mt-2 mb-12 z-50 overlay absolute inset-0 bg-gray-800/90 text-white p-4 text-center flex items-center flex-col justify-center"
+    class="absolute inset-0 z-50 flex flex-col items-center justify-center p-4 mt-2 mb-12 overflow-hidden text-center text-white rounded-md overlay bg-gray-800/90"
   >
     <button
-      class="text-white font-light top-0 right-1 text-4xl absolute hover:text-green-300 ease-in duration-150"
+      class="absolute top-0 text-4xl font-light text-white duration-150 ease-in right-1 hover:text-green-300"
       @click="closeModal"
     >
       &times;
@@ -62,11 +78,11 @@ const addToExistingList = () => {
           <option v-for="(list, index) in listsStore.lists" :value="list.id">{{ list.title }}</option>
         </select>
 
-        <p class="text-sm font-bold mb-2">Or create a new list &amp; add movie</p>
+        <p class="mb-2 text-sm font-bold">Or create a new list &amp; add movie</p>
       </template>
-      <p v-else class="text-sm font-bold mb-2">Create a new list &amp; add movie</p>
+      <p v-else class="mb-2 text-sm font-bold">Create a new list &amp; add movie</p>
 
-      <input v-model="listName" type="text" placeholder="List name" class="text-gray-600 px-2 rounded-sm h-7 w-full" />
+      <input v-model="listName" type="text" placeholder="List name" class="w-full px-2 mb-4 text-gray-600 rounded-sm h-7" />
       <ButtonBase @click="createListAddMovie">Create &amp; Add</ButtonBase>
     </template>
 

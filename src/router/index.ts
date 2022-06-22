@@ -19,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/lists',
     name: 'Lists',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "Lists" */ '../views/Lists.vue'),
   },
   {
@@ -45,6 +46,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/actors/:id',
     name: 'Actor',
     component: () => import(/* webpackChunkName: "Actor" */ '../views/Actor.vue'),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import(/* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
   },
 ]
 const router = createRouter({

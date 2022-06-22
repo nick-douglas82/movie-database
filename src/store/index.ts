@@ -1,34 +1,123 @@
-import { ListWithMedia } from './../lib/api/lists'
-import { defineStore } from 'pinia'
-import { Movie } from '@/services/DataService'
+import { Media } from "@/types/media";
+import { defineStore, createPinia } from "pinia";
 
-export interface UserInfo {
-  displayName: string | null
-  email: string | null
-  phoneNumber: string | null
-  photoURL: string | null
-  providerId: string
-  uid: string
-}
+const pinia = createPinia();
+
+export default pinia;
+
+export type User = {
+  id: number | null;
+  name: string;
+  email: string;
+};
+
+export type UserRootState = {
+  isAuthenticated: boolean;
+  user: User;
+};
 
 export const useUserStore = defineStore({
-  id: 'userStore',
-  state: () => ({
-    isLoggedIn: <boolean>false,
-    user: <UserInfo>{},
-  }),
-})
+  id: "userStore",
+  state: () =>
+    ({
+      isAuthenticated: false,
+      user: {
+        id: null,
+        name: "",
+        email: "",
+      },
+    } as UserRootState),
+
+  actions: {
+    logUserIn(user: User) {
+      this.setAuthStatus(true);
+      this.setUser(user);
+    },
+    logUserOut() {
+      this.isAuthenticated = false;
+      this.setUser({ id: null, name: "", email: "" });
+    },
+    setAuthStatus(authStatus: boolean) {
+      this.isAuthenticated = authStatus;
+    },
+    setUser(user: User) {
+      this.user = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+    },
+  },
+  getters: {
+    isLoggedIn: (state) => state.isAuthenticated,
+    getUser: (state) => state.user,
+  },
+});
+
+export type ErrorRootState = {
+  errors: Array<string>;
+};
+
+export const useErrorStore = defineStore({
+  id: "errorStore",
+  state: () =>
+    ({
+      errors: [],
+    } as ErrorRootState),
+  actions: {
+    addError(error: string) {
+      this.errors.push(error);
+    },
+    clearErrors() {
+      this.errors = [];
+    },
+  },
+  getters: {
+    getErrors: (state) => state.errors,
+    hasErrors: (state) => state.errors.length > 0,
+  },
+});
+
+export type TransactionRootState = {
+  isLoading: boolean;
+};
+
+export const useTransactionStore = defineStore({
+  id: "transactionStore",
+  state: () =>
+    ({
+      isLoading: false,
+    } as TransactionRootState),
+  actions: {
+    setIsLoading(isLoading: boolean) {
+      this.isLoading = isLoading;
+    },
+    resetIsLoading() {
+      this.isLoading = false;
+    },
+  },
+  getters: {
+    getIsloading: (state) => state.isLoading,
+  },
+});
 
 export const useMovieStore = defineStore({
   id: 'movieStore',
   state: () => ({
-    movies: <Movie[]>[],
+    movies: [],
   }),
 })
+
+export interface List {
+  id: number;
+  title: string;
+  userId: string;
+  media: [Media];
+}
 
 export const useListsStore = defineStore({
   id: 'listsStore',
   state: () => ({
-    lists: <ListWithMedia[]>[],
+    lists: [] as List[],
   }),
 })

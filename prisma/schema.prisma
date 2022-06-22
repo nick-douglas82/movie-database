@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int     @id @default(autoincrement())
+  name         String? @db.VarChar(255)
+  email        String  @unique @db.VarChar(255)
+  passwordhash String  @db.VarChar(255)
+}
+
 model Lists {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
@@ -25,6 +32,6 @@ model Media {
   title     String
   type      String
   imageUrl  String
-  list      Lists     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  list      Lists     @relation(fields: [listId], references: [id])
   listId    Int
 }

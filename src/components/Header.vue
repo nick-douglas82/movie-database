@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { getAuth, signOut } from 'firebase/auth'
 import { storeToRefs } from 'pinia'
-import { useListsStore, useUserStore } from '@/store'
+import { useUserStore } from '@/store'
+import { logOutUser } from '@/lib/api/user'
 import Avatar from '@/components/Avatar.vue'
 import { DatabaseIcon } from '@heroicons/vue/solid'
 import { LoginIcon } from '@heroicons/vue/outline'
 
 const userStore = useUserStore()
-const auth = getAuth()
 const { isLoggedIn } = storeToRefs(userStore)
 
-const signOutOfApp = () => signOut(auth)
+const signOutOfApp = () => logOutUser();
 </script>
 
 <template>
@@ -27,7 +26,7 @@ const signOutOfApp = () => signOut(auth)
     <nav class="flex content-center ml-8 mr-auto">
       <router-link to="/movies" class="flex items-center mr-5 text-white hover:text-green-300">Movies</router-link>
       <router-link to="/tv" class="flex items-center mr-5 text-white hover:text-green-300">TV Series</router-link>
-      <router-link to="/lists" class="flex items-center text-white hover:text-green-300">My Lists</router-link>
+      <router-link v-if="isLoggedIn" to="/lists" class="flex items-center text-white hover:text-green-300">My Lists</router-link>
     </nav>
     <router-link v-if="!isLoggedIn" to="/login" class="flex items-center content-center ml-4 text-white">
       Sign in <LoginIcon class="w-5 h-5 ml-1 text-current" />

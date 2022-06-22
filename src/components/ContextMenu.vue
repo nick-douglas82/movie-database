@@ -4,7 +4,7 @@ import { DotsVerticalIcon, TrashIcon, PencilIcon } from '@heroicons/vue/solid'
 </script>
 
 <template>
-  <div class="absolute bottom-10 right-2">
+  <div class="absolute z-50 bottom-10 right-2">
     <Menu as="div" class="relative inline-block text-left">
       <div>
         <MenuButton>
