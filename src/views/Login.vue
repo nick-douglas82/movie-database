@@ -2,20 +2,20 @@
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ButtonBase from '@/components/ButtonBase.vue'
-import { logInUser } from '../lib/api/user';
-import { useUserStore } from '@/store';
+import { logInUser } from '../lib/api/user'
+import { useUserStore } from '@/store'
 
 const router = useRouter()
 
 const email: Ref<string> = ref('')
-const password: Ref<string>= ref('')
+const password: Ref<string> = ref('')
 
 const signIn = async () => {
-    logInUser(email.value, password.value).then((user) => {
-      const userStore = useUserStore();
-      userStore.logUserIn(user);
-      router.push('/');
-    })
+  logInUser(email.value, password.value).then(user => {
+    const userStore = useUserStore()
+    userStore.logUserIn(user)
+    router.push('/')
+  })
 }
 </script>
 

@@ -1,5 +1,4 @@
 import defaultOptions from './defaultOptions'
-import { useErrorStore, useTransactionStore } from '../../store'
 import { apiFetch } from '../api'
 
 export interface List {
@@ -56,5 +55,12 @@ export const updateListName = async (uid: string, listId: number | null, name: s
     method: 'PATCH',
     ...defaultOptions,
     body: JSON.stringify({ uid, listId, name }),
+  })
+}
+
+export const deleteList = async (listId: number) => {
+  return apiFetch<List>(`lists/${listId}`, {
+    method: 'DELETE',
+    ...defaultOptions,
   })
 }
