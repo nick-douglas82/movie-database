@@ -1,4 +1,3 @@
-import { MediaItem } from '../format'
 import defaultOptions from './defaultOptions'
 import { useErrorStore, useTransactionStore } from "../../store";
 
@@ -6,13 +5,6 @@ export interface List {
   authorId: string
   id: number
   title: string
-}
-
-export type ListWithMedia = {
-  authorId: string
-  id: number
-  title: string
-  media: Array<Media>
 }
 
 export type Media = {
@@ -26,7 +18,7 @@ export type Media = {
   title: string
 }
 
-export const getAllLists = async (id: string) => {
+export const getAllLists = async (id: string): Promise<Response> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 
@@ -40,7 +32,7 @@ export const getAllLists = async (id: string) => {
   return await response.json();
 }
 
-export const createNewList = async (id: number, title: string, media: any = {}) => {
+export const createNewList = async (id: number, title: string, media: any = {}): Promise<Response> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 
@@ -64,19 +56,7 @@ export const createNewList = async (id: number, title: string, media: any = {}) 
   return await response.json();
 }
 
-export const createListWithMedia = (uid: string, title: string, mediaItem: MediaItem) => {
-  return api<ListWithMedia>('/list', {
-    method: 'POST',
-    ...defaultOptions,
-    body: JSON.stringify({
-      userId: uid,
-      title: title,
-      mediaItem: mediaItem,
-    }),
-  })
-}
-
-export const addToList = async (listId: number | null, mediaItem: {}) => {
+export const addToList = async (listId: number | null, mediaItem: {}): Promise<Response> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 
@@ -94,7 +74,7 @@ export const addToList = async (listId: number | null, mediaItem: {}) => {
   return await response.json();
 }
 
-export const updateListName = async (uid: string, listId: number | null, name: string) => {
+export const updateListName = async (uid: string, listId: number | null, name: string): Promise<Response> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 
@@ -111,7 +91,7 @@ export const updateListName = async (uid: string, listId: number | null, name: s
 
 
 
-export const deleteList = async (listId: number) => {
+export const deleteList = async (listId: number): Promise<Response> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 

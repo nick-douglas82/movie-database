@@ -2,7 +2,7 @@ import router from "../../router";
 import defaultOptions from "./defaultOptions";
 import { useErrorStore, useUserStore, useTransactionStore } from "../../store";
 
-export const checkAuth = async () => {
+export const checkAuth = async (): Promise<Response> => {
   const transactionStore = useTransactionStore();
 
   transactionStore.setIsLoading(true);
@@ -13,7 +13,7 @@ export const checkAuth = async () => {
   });
 };
 
-export const createNewUser = async (email: string, name: string, password: string) => {
+export const createNewUser = async (email: string, name: string, password: string): Promise<void> => {
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
 
@@ -32,7 +32,7 @@ export const createNewUser = async (email: string, name: string, password: strin
   transactionStore.setIsLoading(false);
 };
 
-export const logInUser = async (email: string, password: string) => {
+export const logInUser = async (email: string, password: string): Promise<void> => {
   const userStore = useUserStore();
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
@@ -55,7 +55,7 @@ export const logInUser = async (email: string, password: string) => {
   transactionStore.setIsLoading(false);
 };
 
-export const logOutUser = async () => {
+export const logOutUser = async (): Promise<void> => {
   const userStore = useUserStore();
   const errorStore = useErrorStore();
   const transactionStore = useTransactionStore();
