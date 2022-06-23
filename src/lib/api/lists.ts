@@ -1,6 +1,6 @@
 import defaultOptions from './defaultOptions'
-import { useErrorStore, useTransactionStore } from "../../store";
-import { apiFetch } from '../api';
+import { useErrorStore, useTransactionStore } from '../../store'
+import { apiFetch } from '../api'
 
 export interface List {
   authorId: string
@@ -20,8 +20,8 @@ export type Media = {
 }
 
 export const getAllLists = async (id: string) => {
-  return apiFetch<List[]>(`/lists/user/${id}`, { ...defaultOptions });
-};
+  return apiFetch<List[]>(`/lists/user/${id}`, { ...defaultOptions })
+}
 
 export const createNewList = async (id: number, title: string, media: any = {}) => {
   let mediaItem = []
@@ -30,71 +30,31 @@ export const createNewList = async (id: number, title: string, media: any = {}) 
   }
 
   return apiFetch<List[]>(`/lists/create`, {
-    method: "POST",
+    method: 'POST',
     ...defaultOptions,
     body: JSON.stringify({
       userId: id,
-      title, 
+      title,
       media: mediaItem,
     }),
-  });
-};
+  })
+}
 
-export const addToList = async (listId: number | null, mediaItem: {}): Promise<Response> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
-    method: "POST",
+export const addToList = async (listId: number | null, mediaItem: {}) => {
+  return apiFetch<List>(`lists/${listId}`, {
+    method: 'POST',
     ...defaultOptions,
     body: JSON.stringify({
       mediaItem: mediaItem,
       listId: listId,
     }),
-  });
-  transactionStore.setIsLoading(false);
-  return await response.json();
+  })
 }
 
-export const updateListName = async (uid: string, listId: number | null, name: string): Promise<Response> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
-    method: "PATCH",
+export const updateListName = async (uid: string, listId: number | null, name: string) => {
+  return apiFetch<List>(`lists/${listId}`, {
+    method: 'PATCH',
     ...defaultOptions,
     body: JSON.stringify({ uid, listId, name }),
-  });
-  transactionStore.setIsLoading(false);
-  return await response.json();
-}
-
-
-
-export const deleteList = async (listId: number): Promise<Response> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/${listId}`, {
-    method: "DELETE",
-    ...defaultOptions,
-  });
-  transactionStore.setIsLoading(false);
-  return await response.json();
-}
-
-export const api = async <T>(url: string, init?: RequestInit): Promise<T> => {
-  const apiUrl = `${
-    import.meta.env.DEV ? import.meta.env.VITE_LOCAL_DB_API : import.meta.env.VITE_PROD_DB_API
-  }/api${url}`
-  const response = await fetch(apiUrl, {
-    ...init,
   })
-  return await response.json()
 }
