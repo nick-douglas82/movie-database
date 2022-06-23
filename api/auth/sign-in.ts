@@ -36,7 +36,9 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
     // return response with access Token & User
     response.status(200).json({
-      user,
+      email: user.email,
+      name: user.name,
+      id: user.id,
     });
   } catch (error) {
     console.log(error);

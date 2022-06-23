@@ -25,8 +25,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     response.setHeader("Set-Cookie", clearCookie());
 
     response.status(401).json({
-      body: { auth: false },
-      origin,
+      auth: false,
     });
 
     return;

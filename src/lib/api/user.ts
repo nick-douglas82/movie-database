@@ -1,77 +1,57 @@
 import router from "../../router";
 import defaultOptions from "./defaultOptions";
-import { useErrorStore, useUserStore, useTransactionStore } from "../../store";
+import { useUserStore } from "../../store";
+import { apiFetch } from "../api";
+import { User } from "./types";
 
-export const checkAuth = async (): Promise<Response> => {
-  const transactionStore = useTransactionStore();
+// Types
+type UnauthenticatedUser = {
+  auth: false;
+};
 
-  transactionStore.setIsLoading(true);
+type AuthenticatedUser = {
+  auth: true;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+};
 
-  return await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/auth`, {
+export type AuthUser = UnauthenticatedUser | AuthenticatedUser;
+
+export const checkAuth = async () => {
+  return apiFetch<AuthUser>(`/auth`);
+};
+
+export const createNewUser = async (email: string, name: string, password: string) => {
+  return apiFetch<User>(`auth/register`, {
     method: "POST",
     ...defaultOptions,
+    body: JSON.stringify({
+      name,
+      email,
+      password 
+    }),
   });
 };
 
-export const createNewUser = async (email: string, name: string, password: string): Promise<void> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/auth/register`, {
+export const logInUser = async (email: string, password: string) => {
+  return apiFetch<User>(`auth/sign-in`, {
     method: "POST",
     ...defaultOptions,
-    body: JSON.stringify({ email, name, password }),
-  });
-  if (response.status >= 200 && response.status <= 299) {
-    router.push("/");
-  } else {
-    errorStore.addError(`Error logging in: ${await response.text()}`);
-  }
-  transactionStore.setIsLoading(false);
-};
+    body: JSON.stringify({
+      email,
+      password 
+    }),
+  })
+}
 
-export const logInUser = async (email: string, password: string): Promise<void> => {
-  const userStore = useUserStore();
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/auth/sign-in`, {
-    method: "POST",
-    ...defaultOptions,
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (response.status >= 200 && response.status <= 299) {
-    const user = await response.json();
-    userStore.logUserIn(user.user);
-    router.push("/");
-  } else {
-    errorStore.addError(`Error logging in: ${await response.text()}`);
-  }
-  transactionStore.setIsLoading(false);
-};
-
-export const logOutUser = async (): Promise<void> => {
-  const userStore = useUserStore();
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/auth/sign-out`, {
-    method: "POST",
-    ...defaultOptions,
-  });
-
-  if (response.status >= 200 && response.status <= 299) {
+export const logOutUser = async () => {
+  apiFetch<void>(`/auth/sign-out`, { method: 'POST', ...defaultOptions }).then(() => {
+    const userStore = useUserStore();
     userStore.logUserOut();
+
     router.push("/");
-  } else {
-    errorStore.addError(`Error logging in: ${await response.text()}`);
-  }
-  transactionStore.setIsLoading(false);
+  });
 };

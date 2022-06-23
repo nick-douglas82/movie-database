@@ -1,5 +1,6 @@
 import defaultOptions from './defaultOptions'
 import { useErrorStore, useTransactionStore } from "../../store";
+import { apiFetch } from '../api';
 
 export interface List {
   authorId: string
@@ -18,32 +19,17 @@ export type Media = {
   title: string
 }
 
-export const getAllLists = async (id: string): Promise<Response> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
+export const getAllLists = async (id: string) => {
+  return apiFetch<List[]>(`/lists/user/${id}`, { ...defaultOptions });
+};
 
-  transactionStore.setIsLoading(true);
-
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/user/${id}`, {
-    method: "GET",
-    ...defaultOptions,
-  });
-  transactionStore.setIsLoading(false);
-  return await response.json();
-}
-
-export const createNewList = async (id: number, title: string, media: any = {}): Promise<Response> => {
-  const errorStore = useErrorStore();
-  const transactionStore = useTransactionStore();
-
-  transactionStore.setIsLoading(true);
-
+export const createNewList = async (id: number, title: string, media: any = {}) => {
   let mediaItem = []
   if (Object.entries(media).length > 0) {
     mediaItem = media
   }
 
-  const response = await fetch(`${import.meta.env.VITE_LOCAL_DB_API}/api/lists/create`, {
+  return apiFetch<List[]>(`/lists/create`, {
     method: "POST",
     ...defaultOptions,
     body: JSON.stringify({
@@ -52,9 +38,7 @@ export const createNewList = async (id: number, title: string, media: any = {}):
       media: mediaItem,
     }),
   });
-  transactionStore.setIsLoading(false);
-  return await response.json();
-}
+};
 
 export const addToList = async (listId: number | null, mediaItem: {}): Promise<Response> => {
   const errorStore = useErrorStore();
