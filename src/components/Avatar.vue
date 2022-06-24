@@ -2,19 +2,19 @@
 import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
-const user = userStore.user
+const user = userStore
 </script>
 
 <template>
   <span
-    v-if="user.displayName"
-    class="cursor-pointer inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-500"
+    v-if="user.name"
+    class="inline-flex items-center justify-center w-10 h-10 bg-gray-500 rounded-full cursor-pointer"
   >
-    <span class="font-medium leading-none text-white">TW</span>
+    <span class="font-medium leading-none text-white">{{ user.name.slice(0, 1) }}</span>
   </span>
 
-  <span v-else class="cursor-pointer inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
-    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+  <span v-else class="inline-block w-10 h-10 overflow-hidden bg-gray-100 rounded-full cursor-pointer">
+    <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
       <path
         d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
       />

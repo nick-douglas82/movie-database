@@ -22,8 +22,8 @@ const closeModal = () => {
 }
 
 const createList = () => {
-  if (userStore.user.id) {
-    createNewList(userStore.user.id, listName.value).then((list) => {
+  if (userStore.id) {
+    createNewList(Number(userStore.id), listName.value).then(list => {
       listsStore.lists.push(list)
       listName.value = ''
       closeModal()

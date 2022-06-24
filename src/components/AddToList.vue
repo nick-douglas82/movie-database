@@ -32,8 +32,8 @@ const createListAddMovie = () => {
     type: props.mediaItem.media_type,
     imageUrl: props.mediaItem.poster_path,
   }
-  if (userStore.user.id) {
-    createNewList(userStore.user.id, listName.value, mediaItem).then(list => {
+  if (userStore.id) {
+    createNewList(Number(userStore.id), listName.value, mediaItem).then(list => {
       listsStore.lists.push(list)
       listName.value = ''
     })

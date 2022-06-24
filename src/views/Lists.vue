@@ -3,7 +3,7 @@ import { reactive, Ref, ref, unref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useListsStore, useUserStore } from '@/store'
 import router from '@/router'
-import { deleteList, Media, updateListName } from '@/lib/api/lists'
+import { deleteList, updateListName } from '@/lib/api/lists'
 import { getListsPopulateStore } from '@/lib/helpers/lists'
 
 import { PlusIcon } from '@heroicons/vue/solid'
@@ -37,11 +37,11 @@ const editListName = (name: string, listId: number) => {
 }
 
 const updateList = (updatedName: string) => {
-  if (!userStore.user.id) {
+  if (!userStore.id) {
     return
   }
 
-  const userId = userStore.user.id?.toString();
+  const userId = userStore.id?.toString()
   updateListName(userId, selectedList.listId, unref(updatedName)).then(list => {
     const listInStore = listsStore.lists.find(storedList => storedList.id === list.id)
 

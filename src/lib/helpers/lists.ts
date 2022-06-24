@@ -6,8 +6,8 @@ export const getListsPopulateStore = () => {
   const userStore = useUserStore()
 
   if (listsStore.lists.length === 0) {
-    if (userStore.user.id) {
-      getAllLists(userStore.user.id.toString()).then(lists => {
+    if (userStore.id) {
+      getAllLists(userStore.id.toString()).then(lists => {
         listsStore.lists = lists
       })
     }
