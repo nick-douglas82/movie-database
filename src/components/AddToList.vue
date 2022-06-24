@@ -36,6 +36,7 @@ const createListAddMovie = () => {
     createNewList(Number(userStore.id), listName.value, mediaItem).then(list => {
       listsStore.lists.push(list)
       listName.value = ''
+      closeModal()
     })
   }
 }
