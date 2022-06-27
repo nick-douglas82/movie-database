@@ -8,7 +8,7 @@ import router from '@/router'
 const email: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 
-const signIntoApp = async () => {
+const signIntoApp = () => {
   logInUser(email.value, password.value).then(user => {
     const userStore = useUserStore()
     userStore.logUserIn(user)

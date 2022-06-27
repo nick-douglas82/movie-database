@@ -10,7 +10,7 @@ const router = useRouter()
 const email: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 
-const signIn = async () => {
+const signIn = () => {
   logInUser(email.value, password.value).then(user => {
     const userStore = useUserStore()
     userStore.logUserIn(user)

@@ -18,11 +18,11 @@ export type Media = {
   title: string
 }
 
-export const getAllLists = async (id: string) => {
+export const getAllLists = (id: string) => {
   return apiFetch<List[]>(`/lists/user/${id}`, { ...defaultOptions })
 }
 
-export const createNewList = async (id: number, title: string, media: any = {}) => {
+export const createNewList = (id: number, title: string, media: any = {}) => {
   let mediaItem = []
   if (Object.entries(media).length > 0) {
     mediaItem = media
@@ -39,7 +39,7 @@ export const createNewList = async (id: number, title: string, media: any = {}) 
   })
 }
 
-export const addToList = async (listId: number | null, mediaItem: {}) => {
+export const addToList = (listId: number | null, mediaItem: {}) => {
   return apiFetch<List>(`lists/${listId}`, {
     method: 'POST',
     ...defaultOptions,
@@ -50,7 +50,7 @@ export const addToList = async (listId: number | null, mediaItem: {}) => {
   })
 }
 
-export const updateListName = async (uid: string, listId: number | null, name: string) => {
+export const updateListName = (uid: string, listId: number | null, name: string) => {
   return apiFetch<List>(`lists/${listId}`, {
     method: 'PATCH',
     ...defaultOptions,
@@ -58,7 +58,7 @@ export const updateListName = async (uid: string, listId: number | null, name: s
   })
 }
 
-export const deleteList = async (listId: number) => {
+export const deleteList = (listId: number) => {
   return apiFetch<List>(`lists/${listId}`, {
     method: 'DELETE',
     ...defaultOptions,
