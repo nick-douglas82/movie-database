@@ -51,7 +51,7 @@ if (route.params.id && typeof route.params.id === 'string') {
         <div class="w-2/3 p-6 mt-64 backdrop-blur-md bg-black/20">
           <h2 class="mt-4 text-4xl font-semibold text-white md:mt-0">{{ state.movie.title }}</h2>
           <div class="flex flex-wrap items-center mt-2 text-sm text-white">
-            <AverageRating :rating="state.movie.vote_average" />
+            <AverageRating :rating="state.movie.vote_average.toFixed(1)" />
             <span class="mx-2">|</span>
             <span>{{ formatDateToYear(state.movie.release_date) }}</span>
             <span class="mx-2">|</span>

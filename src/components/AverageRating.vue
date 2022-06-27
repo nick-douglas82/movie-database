@@ -1,12 +1,12 @@
 <script setup lang="ts">
 const props = defineProps<{
-  rating: number
+  rating: string
 }>()
 </script>
 
 <template>
   <div
-    class="bg-green-300 rounded-full text-black text-xs w-9 h-9 flex items-center content-center text-center font-semibold"
+    class="flex items-center content-center text-xs font-semibold text-center text-black bg-green-300 rounded-full w-9 h-9"
   >
     <span class="w-full">{{ props.rating }}</span>
   </div>
