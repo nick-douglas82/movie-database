@@ -11,6 +11,7 @@ export const apiRaw = async (url: string, init?: RequestInit): Promise<Response>
   return response
 }
 
+// Another test
 export const apiFetch = async <T>(url: string, init?: RequestInit): Promise<T> => {
   const response = await apiRaw(url, init)
 
