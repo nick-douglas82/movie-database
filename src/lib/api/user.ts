@@ -24,6 +24,7 @@ export const checkAuth = () => {
   return apiFetch<AuthUser>(`/auth`)
 }
 
+// test change
 export const createNewUser = (email: string, name: string, password: string) => {
   return apiFetch<User>(`auth/register`, {
     method: 'POST',
