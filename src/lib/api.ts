@@ -1,3 +1,4 @@
+// test
 export const apiRaw = async (url: string, init?: RequestInit): Promise<Response> => {
   // Add API prefix to request URL
   const apiUrl = `${import.meta.env.VITE_LOCAL_DB_API}/api/${url}`
